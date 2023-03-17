@@ -1013,7 +1013,7 @@ funcs => {
 
     const correto = [
         "Eu vou entregar o meu arquivo ado1.js que eu alterei e nada mais.",
-        "Eu vou entregar pelo Blackboard.",
+        "Eu vou fazer no Git e enviar o link para o professor.",
     ];
 
     const testes25 = [];
