@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <title>Introdução ao JavaScript</title>
+        <link rel="stylesheet" href="lib/testefw.css">
+        <link rel="stylesheet" href="ac3.css">
+        <script src="lib/utils.js" defer></script>
+        <script src="lib/testefw.js" defer></script>
+        <script src="ac3-teste.js" defer></script>
+        <script src="ac3.js" defer></script>
+        <script>
+            "use strict";
+
+            function limparForm13() {
+                document.querySelectorAll(".ex13 input[type='text']").forEach(e => e.value = "");
+            }
+
+            function limparForm20() {
+                document.querySelectorAll(".ex20 input[type='text']").forEach(e => e.value = "");
+                document.querySelectorAll(".ex20 input[type='radio']").forEach(e => e.checked = "");
+            }
+
+            function limparListasForm20() {
+                document.querySelector("#notas").innerHTML = "";
+            }
+        </script>
+    </head>
+    <body>
+        <div class="formzinho ex13">
+            <h1>Formulário para o exercício 13</h1>
+            <p>
+                <label for="ladoA">Lado A:</label>
+                <input type="text" id="ladoA">
+            </p>
+            <p>
+                <label for="ladoB">Lado B:</label>
+                <input type="text" id="ladoB">
+            </p>
+            <p>
+                <label for="ladoC">Lado C:</label>
+                <input type="text" id="ladoC">
+            </p>
+            <p class="ex13e20-botao">
+                <label for="botaoTriangulo">&nbsp;</label>
+                <button type="button" id="botaoTriangulo" onclick="verificarTriangulo();">Verificar</button>
+            </p>
+            <p>
+                <label for="tipoTriangulo">Resultado:</label>
+                <input type="text" id="tipoTriangulo" class="grande" readonly>
+            </p>
+            <p class="ex13e20-botao">
+                <label for="btLimpar1">&nbsp;</label>
+                <button type="button" id="btLimpar1" onclick="limparForm13();">Limpar</button>
+            </p>
+        </div>
+        <div class="formzinho ex20">
+            <h1>Formulário para o exercício 20</h1>
+            <p>
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" class="grande">
+            </p>
+            <p class="ex13e20-radio">
+                <label for="ele">Ele</label>
+                <input type="radio" id="ele" value="M" class="genero" name="genero">
+            </p>
+            <p class="ex13e20-radio">
+                <label for="ela">Ela</label>
+                <input type="radio" id="ela" value="F" class="genero" name="genero">
+            </p>
+            <p>
+                <label for="disciplina">Disciplina:</label>
+                <input type="text" id="disciplina" class="grande">
+            </p>
+            <p>
+                <label for="ac1">ACs:</label>
+                <input type="text" id="ac1">
+                <input type="text" id="ac2">
+                <input type="text" id="ac3">
+                <input type="text" id="ac4">
+                <input type="text" id="ac5">
+            </p>
+            <p>
+                <label for="prova">Prova:</label>
+                <input type="text" id="prova">
+            </p>
+            <p>
+                <label for="sub">Sub:</label>
+                <input type="text" id="sub">
+            </p>
+            <p>
+                <label for="presenca">Presença:</label>
+                <input type="text" id="presenca">
+            </p>
+            <p class="ex13e20-botao">
+                <label for="botaoCadastrar">&nbsp;</label>
+                <button type="button" id="botaoCadastrar" onclick="verificarAlunoMatriculado();">Verificar</button>
+            </p>
+            <p class="ex13e20-botao">
+                <label for="btLimpar2">&nbsp;</label>
+                <button type="button" id="btLimpar2" onclick="limparForm20();">Limpar campos</button>
+            </p>
+            <p class="ex13e20-botao">
+                <label for="btLimpar3">&nbsp;</label>
+                <button type="button" id="btLimpar3" onclick="limparListasForm20();">Limpar lista</button>
+            </p>
+            <div>
+                <label>Matrículas registradas:</label>
+                <ol id="notas">
+                </ol>
+            </div>
+        </div>
+    </body>
+</html>
