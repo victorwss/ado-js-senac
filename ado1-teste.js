@@ -110,7 +110,7 @@ funcs => {
             erroGravissimo(""
                     + "<h1>SE VOCÊ ESTÁ VENDO ISSO, É PORQUE VOCÊ NÃO DEFINIU CORRETAMENTE OS INTEGRANTES DO SEU GRUPO.</h1>"
                     + "<p>Arrumar isto é a primeira coisa que você tem que fazer neste ADO, e assim que o fizer esta mensagem vai desaparecer.</p>"
-                    + "<p>Procure a função dadosDosAlunos() no arquivo ado1.js.</p>"
+                    + "<p>Procure a função nomesDosAlunos() no arquivo ado1.js.</p>"
                     + "<p>Quem entregar para o professor um JavaScript que faça esta mensagem aparecer, vai ficar com nota zero!</p>"
             );
             throw e;
