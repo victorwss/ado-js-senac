@@ -510,11 +510,5 @@ function classificacao(times) {
  * @returns {Array<string>} As opções corretas de entrega.
  */
 function comoFazerEntrega(array) {
-    const certo1 = "Eu vou entregar o arquivo ac3.js que eu alterei e nada mais.";
-    const certo2 = "Eu vou entregar por meio do Google Forms.";
-    const resposta = [];
-    for (let i = 0; i < array.length; i++) {
-        if (array[i] === certo1 || array[i] === certo2) resposta.push(i);
-    };
-    return resposta;
+    naoFizIssoAinda();
 }
