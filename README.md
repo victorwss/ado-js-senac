@@ -1,6 +1,6 @@
-# Exercício - Introdução ao Javascript
+# Exercício - Introdução ao JavaScript
 
-Exercícios de Introdução ao JavaScript, passando pelos tipos, estruturas e funções da disciplina de Linguagens para Web do Senac.
+Exercícios de Introdução ao JavaScript, passando pelos tipos, estruturas e funções da disciplina de Linguagens de Script para Web do Senac.
 
 ## O que fazer?
 
@@ -22,7 +22,7 @@ Faça o ADO em grupos de 1 até 5 pessoas.
 
 O exercício funciona usando um framework de testes em JavaScript desenvolvido para a atividade.
 
-Para executar e testar este AC, basta abrir o arquivo `ado1.html` em um navegador moderno (Chrome, Firefox, Opera, Edge, Konqueror, Safari ou Samsung Internet).
+Para executar e testar este ADO, basta abrir o arquivo `ado1.html` em um navegador moderno (Chrome, Firefox, Opera, Edge, Konqueror, Safari ou Samsung Internet).
 A página vem com dois formulários para testar os exercícios 14 e 17.
 Eles estão lá porque esses dois exercícios são acerca de manipulação do DOM. Entrentanto, você também pode interagir com eles diretamente.
 Mas antes deles, há um pequeno formulário com um botão de executar os testes.
@@ -63,7 +63,7 @@ A página `ado1.html` já calculará a nota automaticamente, da seguinte forma:
 - Faça o exercício 0 antes de qualquer coisa.
   Ele se chama exercício 0 porque se você não o fizer direito, a sua nota também será 0.
 
-- Cada exercício do 1 ao 25 tem um peso diferente e uma quantidade de testes diferentes. O peso em geral é próximo de 0.4 pra cada, uns um pouco mais fáceis valem um pouco menos e uns um pouco mais difíceis valem mais.
+- Cada exercício do 1 ao 25 tem um peso diferente e uma quantidade de testes diferentes. O peso em geral é próximo de 0.4 para cada, uns um pouco mais fáceis valem um pouco menos e uns um pouco mais difíceis valem um pouco mais.
   Alguns exercícios são distribuídos em mais de um grupo de testes.
   Cada grupo tem a nota proporcional ao peso e ao número de testes realizados com sucesso.
   Se todos os testes num grupo forem executados com sucesso, o peso correspondente àquele grupo é somado à nota.
