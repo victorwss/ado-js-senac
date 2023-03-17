@@ -32,7 +32,11 @@
     margin: 0;
 }
 
-.formzinho label, .formzinho input[type="text"], .formzinho input[type="radio"], .formzinho button {
+.formzinho label, .formzinho input[type="text"], .formzinho button {
+    height: 25px;
+}
+
+.formzinho textarea {
     height: 25px;
 }
 
@@ -53,6 +57,7 @@
     border-radius: 5px;
     padding: 2px;
     font-size: 1.25em;
+    width: 75px;
 }
 
 .formzinho {
@@ -76,18 +81,19 @@
     font-size: 1.2em;
 }
 
-.formzinho input.grande {
-    width: 391px;
+#tipoTriangulo {
+    width: 400px;
 }
 
-.formzinho .ex13e20-botao {
+#areaTriangulo {
+    width: 160px;
+}
+
+.formzinho textarea {
+    width: 600px;
+    height: 200px;
+}
+
+.formzinho .ex17-botao {
     position: relative;
-}
-
-.formzinho input:not(.grande), .formzinho .ex13e20-radio {
-    width: 75px;
-}
-
-.formzinho .ex13e20-radio {
-    text-align: center;
 }
