@@ -98,7 +98,7 @@ function operacoesBasicas(operacao, numero1, numero2) {
  *
  * @param {*} elemento1 O primeiro operando.
  * @param {*} elemento2 O segundo operando.
- * @returns {String} A mensagem com o resultado da comparação.
+ * @return {String} A mensagem com o resultado da comparação.
  */
 function comparadorBasico(elemento1, elemento2) {
     naoFizIssoAinda();
