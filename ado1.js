@@ -3,14 +3,16 @@
 // EXERCÍCIO 0 - ANTES DE MAIS NADA, IMPLEMENTE ESTA FUNÇÃO.
 /**
  * Função que retorna um Array contendo os nomes dos alunos que fizeram este exercício.
- * @return {Array} Os nomes dos alunos que fizeram este exercício.
+ * @return {string[]} Os nomes dos alunos que fizeram este exercício.
  */
 function nomesDosAlunos() {
     return [ "João da Silva", "Maria da Silva" ];
 }
 
-// Implemente as funções abaixo, conforme pede o enunciado.
-// Carregue o arquivo ado1.html para ver os resultados e a sua nota.
+// Observe esses dois exemplos. O que vocês têm que desenvolver são funções semelhantes a essas.
+// São funções que recebem alguns parâmetros fazem alguma coisa com esses parâmetros e retornam
+// alguma coisa. Nada de variáveis globais ou código fora das funções.
+// Ah, e não bagunce esses exemplos!
 
 // EXEMPLO 1.
 /**
@@ -37,6 +39,9 @@ function maiorDosDois(a, b) {
 function maiorDosDoisSimplificado(a, b) {
     return a > b ? a : b;
 }
+
+// Implemente as funções abaixo, conforme pede o enunciado.
+// Carregue o arquivo ado1.html para ver os resultados e a sua nota.
 
 // EXERCÍCIO 1.
 /**
@@ -74,7 +79,7 @@ function maiorDosQuatro(a, b, c, d) {
  * Ah, as letras sempre devem ser maiúsculas. Em caso de minúsculas (ou símbolos, ou palavras com várias letras,
  * ou qualquer outra coisa), retorne undefined também.
  *
- * @param {String} operacao A letra que identifica a operação a ser realizada.
+ * @param {string} operacao A letra que identifica a operação a ser realizada.
  * @param {number} numero1 O primeiro operando.
  * @param {number} numero2 O segundo operando.
  * @return {number} O resultado da operação.
@@ -98,7 +103,7 @@ function operacoesBasicas(operacao, numero1, numero2) {
  *
  * @param {*} elemento1 O primeiro operando.
  * @param {*} elemento2 O segundo operando.
- * @return {String} A mensagem com o resultado da comparação.
+ * @return {string} A mensagem com o resultado da comparação.
  */
 function comparadorBasico(elemento1, elemento2) {
     naoFizIssoAinda();
@@ -114,8 +119,8 @@ function comparadorBasico(elemento1, elemento2) {
  *  - João Silva -> João
  *  - Maria -> Maria
  *
- * @param {String} nomeCompleto Nome completo da pessoa.
- * @return {String} String com o primeiro nome apenas.
+ * @param {string} nomeCompleto Nome completo da pessoa.
+ * @return {string} String com o primeiro nome apenas.
  */
 function primeiroNome(nomeCompleto) {
     naoFizIssoAinda();
@@ -132,8 +137,8 @@ function primeiroNome(nomeCompleto) {
  *  - João Silva -> João S.
  *  - Maria -> Maria
  *
- * @param {String} nomeCompleto Nome completo da pessoa.
- * @return {String} String com o primeiro nome conforme dado e o segundo nome abreviado.
+ * @param {string} nomeCompleto Nome completo da pessoa.
+ * @return {string} String com o primeiro nome conforme dado e o segundo nome abreviado.
  */
 function abreviadorNomes(nomeCompleto) {
     naoFizIssoAinda();
@@ -155,7 +160,7 @@ function abreviadorNomes(nomeCompleto) {
  * Embora o calendário gregoriano tenha sido instituído em 1582, considere como se fosse válido retroativamente
  * desde o ano 0001.
  *
- * @param {String} data String com a data no formato brasileiro (dia/mês/ano).
+ * @param {string} data String com a data no formato brasileiro (dia/mês/ano).
  * @return {boolean} Verdadeiro se a data for válida, falso em caso contrário.
  */
 function dataValida(data) {
@@ -178,8 +183,8 @@ function dataValida(data) {
  *
  * Observação: Note a letra maiúscula do mês.
  *
- * @param {String} data String com a data no formato brasileiro (dia/mês/ano).
- * @return {String} Data no formato "Dia de Nome-do-Mês-por-Extenso de Ano" ou "Data inválida".
+ * @param {string} data String com a data no formato brasileiro (dia/mês/ano).
+ * @return {string} Data no formato "Dia de Nome-do-Mês-por-Extenso de Ano" ou "Data inválida".
  */
 function converteDataParaFormaCompleta(data) {
     naoFizIssoAinda();
@@ -207,7 +212,7 @@ function somadorPares(inicio, fim) {
 /**
  * Recebe um vetor de números e retorna o menor elemento do vetor.
  * Se o vetor estiver vazio, retorna undefined.
- * @param {Array<number>} vetor O vetor de números (nunca indefinido).
+ * @param {number[]} vetor O vetor de números (nunca indefinido).
  * @return {number|undefined} O menor valor do vetor ou undefined se o vetor estiver vazio.
  */
 function acharMenor(vetor) {
@@ -218,8 +223,8 @@ function acharMenor(vetor) {
 /**
  * Recebe um vetor de números e devolve um outro vetor apenas com os números pares deste vetor.
  * Se o vetor estiver vazio, devolve um vetor vazio.
- * @param {Array<number>} O vetor com números inteiros (nunca indefinido).
- * @return {Array<number>} O vetor contendo apenas números pares do original (ou vazio se não houver nenhum).
+ * @param {number[]} O vetor com números inteiros (nunca indefinido).
+ * @return {number[]} O vetor contendo apenas números pares do original (ou vazio se não houver nenhum).
  */
 function acharPares(vetor) {
     naoFizIssoAinda();
@@ -242,10 +247,10 @@ function acharPares(vetor) {
  *  - Maior e igual a 40,0 -> "Obesidade mórbida (Grau III)"
  * 
  * @param {Object} pessoa Dicionário com dados da pessoa.
- * @param {String} pessoa.nome O nome da pessoa.
+ * @param {string} pessoa.nome O nome da pessoa.
  * @param {number} pessoa.peso A massa da pessoa em kg.
  * @param {number} pessoa.altura A altura da pessoa em metros.
- * @return {String} Estado do peso da pessoa.
+ * @return {string} Estado do peso da pessoa.
  */
 function calcularImc(pessoa) {
     naoFizIssoAinda();
@@ -258,8 +263,8 @@ function calcularImc(pessoa) {
  * Observação: Não se preocupe com a pontuação, vírgulas, ponto finais, pontos de exclamação e
  * outros caracteres de pontuação, ideogramas chineses, emojis, etc. nunca serão recebidos como parâmetro.
  *
- * @param {String} frase A frase a ser dividida em palavras.
- * @return {Array<String>} Um array com as palavras da frase.
+ * @param {string} frase A frase a ser dividida em palavras.
+ * @return {string[]} Um array com as palavras da frase.
  */
 function obterPalavras(frase) {
     naoFizIssoAinda();
@@ -280,8 +285,8 @@ function obterPalavras(frase) {
  *    por esse método:
  *    Fancr zngn Qhzoyrqber. Znf an ireqnqr, Qhzoyrqber wá zbeerevn qr dhnydhre wrvgb r vffb sbv pbzovanqb rager
  *    ryrf cnen ratnane Ibyqrzbeg, dhr pbasvnin rz Fancr.
- * @param {String} texto O texto a ser transformado com rot13.
- * @return {String} O texto resultante da transformação com rot13.
+ * @param {string} texto O texto a ser transformado com rot13.
+ * @return {string} O texto resultante da transformação com rot13.
  */
 function rot13(texto) {
     naoFizIssoAinda();
@@ -312,7 +317,7 @@ function fazerRot13() {
  * @param {number} a O tamanho do primeiro lado do triângulo.
  * @param {number} a O tamanho do segundo lado do triângulo.
  * @param {number} a O tamanho do terceiro lado do triângulo.
- * @return {String} O tipo de triângulo resultante.
+ * @return {string} O tipo de triângulo resultante.
  */
 function tipoTriangulo(a, b, c) {
     naoFizIssoAinda();
@@ -385,9 +390,9 @@ function verificarTriangulo() {
  * Cada jogador é representado por um objeto no seguinte formato:
  * {"nome": (uma string), "cartas": (um array com cinco cartas)}
  * 
- * @param {Array<String>} baralho Um array com as cartas a serem distribuídas.
+ * @param {string[]} baralho Um array com as cartas a serem distribuídas.
  *                                Ao término da função, restarão entre 17 e 42 cartas remanescentes neste array.
- * @param {Array<Object>} jogadores Um array com os jogadores que devem receber as cartas.
+ * @param {Object[]} jogadores Um array com os jogadores que devem receber as cartas.
  */
 function distribuirCartas(baralho, jogadores) {
     naoFizIssoAinda();
@@ -399,8 +404,8 @@ function distribuirCartas(baralho, jogadores) {
  * do exercício 18, mas já com as cartas devidamente recebidas, e retorne o nome do jogador que tem o ás de ouros.
  * Se ninguém estiver com o ás de ouros, retorne null.
  *
- * @param {Array<Object>} jogadores Um array com os jogadores, cada um com 5 cartas.
- * @return {String|undefined} O nome do jogador com o ás de ouros ou undefined se ninguém tiver o ás de ouros.
+ * @param {Object[]} jogadores Um array com os jogadores, cada um com 5 cartas.
+ * @return {string|undefined} O nome do jogador com o ás de ouros ou undefined se ninguém tiver o ás de ouros.
  */
 function asDeOuros(jogadores) {
     naoFizIssoAinda();
@@ -413,7 +418,7 @@ function asDeOuros(jogadores) {
  *
  * Dica: Lembre-se dos métodos every e some dos arrays. 
  *
- * @param {Array<Object>} jogadores Um array com os jogadores, cada um com 5 cartas.
+ * @param {Object[]} jogadores Um array com os jogadores, cada um com 5 cartas.
  * @return {boolean} Verdadeiro se todos tiverem alguma carta real na mão, falso se algum não tiver.
  */
 function todosTemCartasReais(jogadores) {
@@ -428,7 +433,7 @@ function todosTemCartasReais(jogadores) {
  * Observação 1: Não existem duas cartas iguais no baralho. Isso só poderia acontecer se algum dos jogadores estivesse
  * trapaceando, mas considere que todos são sempre honestos.
  *
- * @param {Array<String>} cartas Um array com as 5 cartas.
+ * @param {string[]} cartas Um array com as 5 cartas.
  * @return {boolean} Verdadeiro se houverem pelo menos 3 cartas com o mesmo valor na mão, falso em caso contrário.
  */
 function existeTrinca(cartas) {
@@ -448,7 +453,7 @@ function existeTrinca(cartas) {
  *
  * Dica: Chame a função obterPalavras do exercício 12 como parte da solução desde exercício.
  *
- * @param {String} frase A frase da qual deseja se obter a contagem de palavras.
+ * @param {string} frase A frase da qual deseja se obter a contagem de palavras.
  * @return {Object} Um objeto onde as chaves são palavras da frase e os valores são o número de ocorrências na frase.
  */
 function contarPalavras(frase) {
@@ -465,7 +470,7 @@ function contarPalavras(frase) {
  * @param {number} a O termo quadrático da expressão de segundo grau.
  * @param {number} b O termo linear da expressão de segundo grau.
  * @param {number} c O termo constante da expressão de segundo grau.
- * @return {Array<number>|undefined} Um array com as soluções reais ou undefined se não for uma equação de segundo grau.
+ * @return {number[]|undefined} Um array com as soluções reais ou undefined se não for uma equação de segundo grau.
  */
 function bhaskara(a, b, c) {
     naoFizIssoAinda();
@@ -481,13 +486,13 @@ function bhaskara(a, b, c) {
  * Caso haja empate no número de pontos, use o saldo de gols como critério de desempate.
  * Persistindo o empate, use a ordem alfabética do nome do time para ordená-los na classificação.
  *
- * Dica: Os operadores < ou > também podem ser usados para classificar strings em ordem alfabética. Por eemplo,
+ * Dica: Os operadores < ou > também podem ser usados para classificar strings em ordem alfabética. Por exemplo,
  * "Flamengo" < "Grêmio" resulta em true e "Bahia" > "Vasco" resulta em false.
  *
  * Dica: Use o método sort de array passando como parâmetro, um lambda com dois parâmetros.
  *
  * @param {Object} times O dicionário contendpo os nomes dos times e o respectivo número de pontos e saldo de gols.
- * @return {Array<string>} Um array com os times na ordem de classificação, do campeão ao lanterna.
+ * @return {string[]} Um array com os times na ordem de classificação, do campeão ao lanterna.
  */
 function classificacao(times) {
     naoFizIssoAinda();
@@ -506,8 +511,8 @@ function classificacao(times) {
  *
  * Dica: Use o console.log para ver o que é recebido no array.
  *
- * @param {Array<string>} array Várias possibilidades de como fazer a entrega deste AC.
- * @returns {Array<string>} As opções corretas de entrega.
+ * @param {string[]} array Várias possibilidades de como fazer a entrega deste AC.
+ * @return {string[]} As opções corretas de entrega.
  */
 function comoFazerEntrega(array) {
     naoFizIssoAinda();

@@ -32,8 +32,8 @@ funcs => {
     function testOk() { return nomesOk; }
     function setTestOk(ok) { nomesOk = ok; }
 
-    function JSONbonito(dados) {
-        return JSON.stringify(dados).replaceAll(",", ", ").replaceAll(":", ": ");
+    function JSONbonito(dados, keys) {
+        return JSON.stringify(dados, keys, 1);
     }
 
     function bonitoIgual(valorEsperado) {
@@ -72,12 +72,27 @@ funcs => {
         }
     }
 
+    const nomes = Object.freeze([
+        "Carlos", "Paulo", "Maria", "Fabiana", "Fernanda", "Cláudio", "Elizabete", "Roberto", "Solange", "Yasmin",
+        "Rayssa", "Joaquim", "Pedro", "Juliana", "Rodrigo", "Ricardo", "Meire", "Sílvia", "Daniela", "Marcos",
+        "Eduardo", "Valéria", "Osvaldo", "Yago", "Felipe", "Vanessa", "Victor", "Michelle", "Alex", "Janete"
+    ]);
+    const sobrenomes = Object.freeze([
+        "de Souza", "de Oliveira", "dos Santos", "de Gusmões", "de Andrade", "da Silva", "Melo", "da Cunha", "Brito", "da Luz",
+        "Fernandes", "Teixeira", "Pereira", "Freitas", "do Amaral", "da Cruz", "Machado", "Assis", "Figueiredo", "da Conceição",
+        "Ferreira", "Matos", "de Campos", "dos Reis", "Rainha", "Valete"
+    ]);
+
+    function nomeAleatorio() {
+        return random.nomeAleatorio(nomes, sobrenomes);
+    }
+
     // NOME DOS ALUNOS.
 
     function validarNomesAlunos() {
         const alunos = nomesDosAlunos(), nomes = [];
-        if (!(alunos instanceof Array)) throw new Error("Os dados do(a)(s) aluno(a)(s) deveriam estar em um array.");
-        if (alunos.length === 0) throw new Error("Você(s) se esqueceu(ram) de preencher os dados com o JSON do(a)(s) aluno(a)(s).");
+        if (!(alunos instanceof Array)) throw new Error("Os nomes do(a)(s) aluno(a)(s) deveriam estar em um array.");
+        if (alunos.length === 0) throw new Error("Você(s) se esqueceu(ram) de preencher os nomes do(a)(s) aluno(a)(s).");
 
         alunos.forEach((aluno, idx) => {
             const numero = idx + 1;
@@ -87,7 +102,7 @@ funcs => {
                 throw new Error(`O nome do(a) aluno(a) ${numero} não está correto.`);
             }
             if (aluno !== aluno.trim()) {
-                throw new Error(`Não deixe espaços em branco sobrando no começo ou no final do nome de ${aluno.trim()} no JSON.`);
+                throw new Error(`Não deixe espaços em branco sobrando no começo ou no final do nome de ${aluno.trim()}.`);
             }
             if (nomes.includes(aluno)) throw new Error("Há nomes de alunos(as) repetidos.");
             nomes.push(aluno);
@@ -359,71 +374,71 @@ funcs => {
     ]);
 
     grupo("Exercício 9", "Achar o menor").maximo(0.2).testes([
-        teste("Se o vetor estiver vazio, devolve undefined."  , () => acharMenor([                            ]), igual(undefined), testOk),
-        teste("Para [42] retorna 42."                         , () => acharMenor([                          42]), igual(       42), testOk),
-        teste("Para [1, 2, 3, 4, 5] retorna 1."               , () => acharMenor([         1,   2,  3,   4,  5]), igual(        1), testOk),
-        teste("Para [1, 2, 3, 4, 0] retorna 0."               , () => acharMenor([         1,   2,  3,   4,  0]), igual(        0), testOk),
-        teste("Para [1, 2, -3, 4, 0] retorna -3."             , () => acharMenor([         1,   2, -3,   4,  0]), igual(       -3), testOk),
-        teste("Para [42, 12, 21] retorna 12."                 , () => acharMenor([                 42,  12, 21]), igual(       12), testOk),
-        teste("Para [42, 12, 21, -27, 8, -22, 9] retorna -27.", () => acharMenor([42, 12, 21, -27,  8, -22,  9]), igual(      -27), testOk)
+        teste("Se o vetor estiver vazio, devolve undefined."  , () => acharMenor(Object.freeze([                            ])), igual(undefined), testOk),
+        teste("Para [42] retorna 42."                         , () => acharMenor(Object.freeze([                          42])), igual(       42), testOk),
+        teste("Para [1, 2, 3, 4, 5] retorna 1."               , () => acharMenor(Object.freeze([         1,   2,  3,   4,  5])), igual(        1), testOk),
+        teste("Para [1, 2, 3, 4, 0] retorna 0."               , () => acharMenor(Object.freeze([         1,   2,  3,   4,  0])), igual(        0), testOk),
+        teste("Para [1, 2, -3, 4, 0] retorna -3."             , () => acharMenor(Object.freeze([         1,   2, -3,   4,  0])), igual(       -3), testOk),
+        teste("Para [42, 12, 21] retorna 12."                 , () => acharMenor(Object.freeze([                 42,  12, 21])), igual(       12), testOk),
+        teste("Para [42, 12, 21, -27, 8, -22, 9] retorna -27.", () => acharMenor(Object.freeze([42, 12, 21, -27,  8, -22,  9])), igual(      -27), testOk)
     ]);
 
     grupo("Exercício 10", "Achar os pares").maximo(0.3).testes([
-        teste("Se o vetor estiver vazio, devolve um vetor vazio.", () => acharPares([               ]), igual([           ]), testOk),
-        teste("Para [1, 3, 5, 7, 9] retorna vazio."              , () => acharPares([1, 3,  5,  7, 9]), igual([           ]), testOk),
-        teste("Para [1, 2, 3, 4, 5] retorna [2, 4]."             , () => acharPares([1, 2,  3,  4, 5]), igual([   2,  4   ]), testOk),
-        teste("Para [1, 2, 3, 4, 0] retorna [2, 4, 0]."          , () => acharPares([1, 2,  3,  4, 0]), igual([   2,  4, 0]), testOk),
-        teste("Para [1, 2, 3, -4, 0] retorna [2, -4, 0]."        , () => acharPares([1, 2,  3, -4, 0]), igual([   2, -4, 0]), testOk),
-        teste("Para [6, 2, -3, -4, 0] retorna [6, 2, -4, 0]."    , () => acharPares([6, 2, -3, -4, 0]), igual([6, 2, -4, 0]), testOk),
-        teste("Para [6, 2, 6, 2, 3] retorna [6, 2, 6, 2]."       , () => acharPares([6, 2,  6,  2, 3]), igual([6, 2,  6, 2]), testOk)
+        teste("Se o vetor estiver vazio, devolve um vetor vazio.", () => acharPares(Object.freeze([               ])), bonitoIgual([           ]), testOk),
+        teste("Para [1, 3, 5, 7, 9] retorna vazio."              , () => acharPares(Object.freeze([1, 3,  5,  7, 9])), bonitoIgual([           ]), testOk),
+        teste("Para [1, 2, 3, 4, 5] retorna [2, 4]."             , () => acharPares(Object.freeze([1, 2,  3,  4, 5])), bonitoIgual([   2,  4   ]), testOk),
+        teste("Para [1, 2, 3, 4, 0] retorna [2, 4, 0]."          , () => acharPares(Object.freeze([1, 2,  3,  4, 0])), bonitoIgual([   2,  4, 0]), testOk),
+        teste("Para [1, 2, 3, -4, 0] retorna [2, -4, 0]."        , () => acharPares(Object.freeze([1, 2,  3, -4, 0])), bonitoIgual([   2, -4, 0]), testOk),
+        teste("Para [6, 2, -3, -4, 0] retorna [6, 2, -4, 0]."    , () => acharPares(Object.freeze([6, 2, -3, -4, 0])), bonitoIgual([6, 2, -4, 0]), testOk),
+        teste("Para [6, 2, 6, 2, 3] retorna [6, 2, 6, 2]."       , () => acharPares(Object.freeze([6, 2,  6,  2, 3])), bonitoIgual([6, 2,  6, 2]), testOk)
     ]);
 
     grupo("Exercício 11", "IMC").maximo(0.4).testes([
-        teste('Deve devolver "Abaixo do peso" para IMC abaixo de 18,5.'                           , () => calcularImc({ peso:  50    , altura: 1.7  }), igual("Abaixo do peso"              ), testOk),
-        teste('Deve devolver "Normal" para IMC a partir de 18,5 e abaixo de 25.'                  , () => calcularImc({ peso:  60    , altura: 1.7  }), igual("Normal"                      ), testOk),
-        teste('Deve devolver "Excesso de peso" para IMC a partir de 25 e abaixo de 30.'           , () => calcularImc({ peso:  72.25 , altura: 1.7  }), igual("Excesso de peso"             ), testOk),
-        teste('Deve devolver "Obesidade leve (Grau I)" para IMC a partir de 30 e abaixo de 35.'   , () => calcularImc({ peso:  86.7  , altura: 1.7  }), igual("Obesidade leve (Grau I)"     ), testOk),
-        teste('Deve devolver "Obesidade severa (Grau II)" para IMC a partir de 35 e abaixo de 40.', () => calcularImc({ peso: 101.15 , altura: 1.7  }), igual("Obesidade severa (Grau II)"  ), testOk),
-        teste('Deve devolver "Obesidade mórbida (Grau III)" para IMC a parte de 40.'              , () => calcularImc({ peso: 160    , altura: 1.7  }), igual("Obesidade mórbida (Grau III)"), testOk),
+        teste('Deve devolver "Abaixo do peso" para IMC abaixo de 18,5.'                           , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso:  50    , altura: 1.7  })), igual("Abaixo do peso"              ), testOk),
+        teste('Deve devolver "Normal" para IMC a partir de 18,5 e abaixo de 25.'                  , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso:  60    , altura: 1.7  })), igual("Normal"                      ), testOk),
+        teste('Deve devolver "Excesso de peso" para IMC a partir de 25 e abaixo de 30.'           , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso:  72.25 , altura: 1.7  })), igual("Excesso de peso"             ), testOk),
+        teste('Deve devolver "Obesidade leve (Grau I)" para IMC a partir de 30 e abaixo de 35.'   , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso:  86.7  , altura: 1.7  })), igual("Obesidade leve (Grau I)"     ), testOk),
+        teste('Deve devolver "Obesidade severa (Grau II)" para IMC a partir de 35 e abaixo de 40.', () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso: 101.15 , altura: 1.7  })), igual("Obesidade severa (Grau II)"  ), testOk),
+        teste('Deve devolver "Obesidade mórbida (Grau III)" para IMC a parte de 40.'              , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso: 160    , altura: 1.7  })), igual("Obesidade mórbida (Grau III)"), testOk),
 
-        teste('Deve devolver "Abaixo do peso" para IMC abaixo de 18,5.'                           , () => calcularImc({ peso:   0    , altura: 2.0  }), igual("Abaixo do peso"              ), testOk),
-        teste('Deve devolver "Abaixo do peso" para IMC abaixo de 18,5.'                           , () => calcularImc({ peso:  73.999, altura: 2.0  }), igual("Abaixo do peso"              ), testOk),
-        teste('Deve devolver "Normal" para IMC a partir de 18,5 e abaixo de 25.'                  , () => calcularImc({ peso:  74    , altura: 2.0  }), igual("Normal"                      ), testOk),
-        teste('Deve devolver "Normal" para IMC a partir de 18,5 e abaixo de 25.'                  , () => calcularImc({ peso:  99.999, altura: 2.0  }), igual("Normal"                      ), testOk),
-        teste('Deve devolver "Excesso de peso" para IMC a partir de 25 e abaixo de 30.'           , () => calcularImc({ peso: 100    , altura: 2.0  }), igual("Excesso de peso"             ), testOk),
-        teste('Deve devolver "Excesso de peso" para IMC a partir de 25 e abaixo de 30.'           , () => calcularImc({ peso: 119.999, altura: 2.0  }), igual("Excesso de peso"             ), testOk),
-        teste('Deve devolver "Obesidade leve (Grau I)" para IMC a partir de 30 e abaixo de 35.'   , () => calcularImc({ peso: 120    , altura: 2.0  }), igual("Obesidade leve (Grau I)"     ), testOk),
-        teste('Deve devolver "Obesidade leve (Grau I)" para IMC a partir de 30 e abaixo de 35.'   , () => calcularImc({ peso: 139.999, altura: 2.0  }), igual("Obesidade leve (Grau I)"     ), testOk),
-        teste('Deve devolver "Obesidade severa (Grau II)" para IMC a partir de 35 e abaixo de 40.', () => calcularImc({ peso: 140    , altura: 2.0  }), igual("Obesidade severa (Grau II)"  ), testOk),
-        teste('Deve devolver "Obesidade severa (Grau II)" para IMC a partir de 35 e abaixo de 40.', () => calcularImc({ peso: 159.999, altura: 2.0  }), igual("Obesidade severa (Grau II)"  ), testOk),
-        teste('Deve devolver "Obesidade mórbida (Grau III)" para IMC a parte de 40.'              , () => calcularImc({ peso: 160    , altura: 2.0  }), igual("Obesidade mórbida (Grau III)"), testOk),
-        teste('Deve devolver "Obesidade mórbida (Grau III)" para IMC a parte de 40.'              , () => calcularImc({ peso: 9999999, altura: 2.0  }), igual("Obesidade mórbida (Grau III)"), testOk),
+        teste('Deve devolver "Abaixo do peso" para IMC abaixo de 18,5.'                           , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso:   0    , altura: 2.0  })), igual("Abaixo do peso"              ), testOk),
+        teste('Deve devolver "Abaixo do peso" para IMC abaixo de 18,5.'                           , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso:  73.999, altura: 2.0  })), igual("Abaixo do peso"              ), testOk),
+        teste('Deve devolver "Normal" para IMC a partir de 18,5 e abaixo de 25.'                  , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso:  74    , altura: 2.0  })), igual("Normal"                      ), testOk),
+        teste('Deve devolver "Normal" para IMC a partir de 18,5 e abaixo de 25.'                  , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso:  99.999, altura: 2.0  })), igual("Normal"                      ), testOk),
+        teste('Deve devolver "Excesso de peso" para IMC a partir de 25 e abaixo de 30.'           , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso: 100    , altura: 2.0  })), igual("Excesso de peso"             ), testOk),
+        teste('Deve devolver "Excesso de peso" para IMC a partir de 25 e abaixo de 30.'           , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso: 119.999, altura: 2.0  })), igual("Excesso de peso"             ), testOk),
+        teste('Deve devolver "Obesidade leve (Grau I)" para IMC a partir de 30 e abaixo de 35.'   , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso: 120    , altura: 2.0  })), igual("Obesidade leve (Grau I)"     ), testOk),
+        teste('Deve devolver "Obesidade leve (Grau I)" para IMC a partir de 30 e abaixo de 35.'   , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso: 139.999, altura: 2.0  })), igual("Obesidade leve (Grau I)"     ), testOk),
+        teste('Deve devolver "Obesidade severa (Grau II)" para IMC a partir de 35 e abaixo de 40.', () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso: 140    , altura: 2.0  })), igual("Obesidade severa (Grau II)"  ), testOk),
+        teste('Deve devolver "Obesidade severa (Grau II)" para IMC a partir de 35 e abaixo de 40.', () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso: 159.999, altura: 2.0  })), igual("Obesidade severa (Grau II)"  ), testOk),
+        teste('Deve devolver "Obesidade mórbida (Grau III)" para IMC a parte de 40.'              , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso: 160    , altura: 2.0  })), igual("Obesidade mórbida (Grau III)"), testOk),
+        teste('Deve devolver "Obesidade mórbida (Grau III)" para IMC a parte de 40.'              , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso: 9999999, altura: 2.0  })), igual("Obesidade mórbida (Grau III)"), testOk),
 
-        teste('Deve devolver "Abaixo do peso" para IMC abaixo de 18,5.'                           , () => calcularImc({ peso:   0    , altura: 0.5  }), igual("Abaixo do peso"              ), testOk),
-        teste('Deve devolver "Abaixo do peso" para IMC abaixo de 18,5.'                           , () => calcularImc({ peso:   4.624, altura: 0.5  }), igual("Abaixo do peso"              ), testOk),
-        teste('Deve devolver "Normal" para IMC a partir de 18,5 e abaixo de 25.'                  , () => calcularImc({ peso:   4.625, altura: 0.5  }), igual("Normal"                      ), testOk),
-        teste('Deve devolver "Normal" para IMC a partir de 18,5 e abaixo de 25.'                  , () => calcularImc({ peso:   6.249, altura: 0.5  }), igual("Normal"                      ), testOk),
-        teste('Deve devolver "Excesso de peso" para IMC a partir de 25 e abaixo de 30.'           , () => calcularImc({ peso:   6.25 , altura: 0.5  }), igual("Excesso de peso"             ), testOk),
-        teste('Deve devolver "Excesso de peso" para IMC a partir de 25 e abaixo de 30.'           , () => calcularImc({ peso:   7.499, altura: 0.5  }), igual("Excesso de peso"             ), testOk),
-        teste('Deve devolver "Obesidade leve (Grau I)" para IMC a partir de 30 e abaixo de 35.'   , () => calcularImc({ peso:   7.5  , altura: 0.5  }), igual("Obesidade leve (Grau I)"     ), testOk),
-        teste('Deve devolver "Obesidade leve (Grau I)" para IMC a partir de 30 e abaixo de 35.'   , () => calcularImc({ peso:   8.749, altura: 0.5  }), igual("Obesidade leve (Grau I)"     ), testOk),
-        teste('Deve devolver "Obesidade severa (Grau II)" para IMC a partir de 35 e abaixo de 40.', () => calcularImc({ peso:   8.75 , altura: 0.5  }), igual("Obesidade severa (Grau II)"  ), testOk),
-        teste('Deve devolver "Obesidade severa (Grau II)" para IMC a partir de 35 e abaixo de 40.', () => calcularImc({ peso:   9.999, altura: 0.5  }), igual("Obesidade severa (Grau II)"  ), testOk),
-        teste('Deve devolver "Obesidade mórbida (Grau III)" para IMC a parte de 40.'              , () => calcularImc({ peso:  10    , altura: 0.5  }), igual("Obesidade mórbida (Grau III)"), testOk),
-        teste('Deve devolver "Obesidade mórbida (Grau III)" para IMC a parte de 40.'              , () => calcularImc({ peso: 9999999, altura: 0.5  }), igual("Obesidade mórbida (Grau III)"), testOk),
+        teste('Deve devolver "Abaixo do peso" para IMC abaixo de 18,5.'                           , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso:   0    , altura: 0.5  })), igual("Abaixo do peso"              ), testOk),
+        teste('Deve devolver "Abaixo do peso" para IMC abaixo de 18,5.'                           , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso:   4.624, altura: 0.5  })), igual("Abaixo do peso"              ), testOk),
+        teste('Deve devolver "Normal" para IMC a partir de 18,5 e abaixo de 25.'                  , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso:   4.625, altura: 0.5  })), igual("Normal"                      ), testOk),
+        teste('Deve devolver "Normal" para IMC a partir de 18,5 e abaixo de 25.'                  , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso:   6.249, altura: 0.5  })), igual("Normal"                      ), testOk),
+        teste('Deve devolver "Excesso de peso" para IMC a partir de 25 e abaixo de 30.'           , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso:   6.25 , altura: 0.5  })), igual("Excesso de peso"             ), testOk),
+        teste('Deve devolver "Excesso de peso" para IMC a partir de 25 e abaixo de 30.'           , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso:   7.499, altura: 0.5  })), igual("Excesso de peso"             ), testOk),
+        teste('Deve devolver "Obesidade leve (Grau I)" para IMC a partir de 30 e abaixo de 35.'   , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso:   7.5  , altura: 0.5  })), igual("Obesidade leve (Grau I)"     ), testOk),
+        teste('Deve devolver "Obesidade leve (Grau I)" para IMC a partir de 30 e abaixo de 35.'   , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso:   8.749, altura: 0.5  })), igual("Obesidade leve (Grau I)"     ), testOk),
+        teste('Deve devolver "Obesidade severa (Grau II)" para IMC a partir de 35 e abaixo de 40.', () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso:   8.75 , altura: 0.5  })), igual("Obesidade severa (Grau II)"  ), testOk),
+        teste('Deve devolver "Obesidade severa (Grau II)" para IMC a partir de 35 e abaixo de 40.', () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso:   9.999, altura: 0.5  })), igual("Obesidade severa (Grau II)"  ), testOk),
+        teste('Deve devolver "Obesidade mórbida (Grau III)" para IMC a parte de 40.'              , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso:  10    , altura: 0.5  })), igual("Obesidade mórbida (Grau III)"), testOk),
+        teste('Deve devolver "Obesidade mórbida (Grau III)" para IMC a parte de 40.'              , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso: 9999999, altura: 0.5  })), igual("Obesidade mórbida (Grau III)"), testOk),
 
-        teste('Deve devolver "Abaixo do peso" para IMC abaixo de 18,5.'                           , () => calcularImc({ peso: 100    , altura: 9999 }), igual("Abaixo do peso"              ), testOk),
-        teste('Deve devolver "Abaixo do peso" para IMC abaixo de 18,5.'                           , () => calcularImc({ peso: 100    , altura: 2.33 }), igual("Abaixo do peso"              ), testOk),
-        teste('Deve devolver "Normal" para IMC a partir de 18,5 e abaixo de 25.'                  , () => calcularImc({ peso: 100    , altura: 2.32 }), igual("Normal"                      ), testOk),
-        teste('Deve devolver "Normal" para IMC a partir de 18,5 e abaixo de 25.'                  , () => calcularImc({ peso: 100    , altura: 2.01 }), igual("Normal"                      ), testOk),
-        teste('Deve devolver "Excesso de peso" para IMC a partir de 25 e abaixo de 30.'           , () => calcularImc({ peso: 100    , altura: 2.0  }), igual("Excesso de peso"             ), testOk),
-        teste('Deve devolver "Excesso de peso" para IMC a partir de 25 e abaixo de 30.'           , () => calcularImc({ peso: 100    , altura: 1.83 }), igual("Excesso de peso"             ), testOk),
-        teste('Deve devolver "Obesidade leve (Grau I)" para IMC a partir de 30 e abaixo de 35.'   , () => calcularImc({ peso: 100    , altura: 1.82 }), igual("Obesidade leve (Grau I)"     ), testOk),
-        teste('Deve devolver "Obesidade leve (Grau I)" para IMC a partir de 30 e abaixo de 35.'   , () => calcularImc({ peso: 100    , altura: 1.7  }), igual("Obesidade leve (Grau I)"     ), testOk),
-        teste('Deve devolver "Obesidade severa (Grau II)" para IMC a partir de 35 e abaixo de 40.', () => calcularImc({ peso: 100    , altura: 1.69 }), igual("Obesidade severa (Grau II)"  ), testOk),
-        teste('Deve devolver "Obesidade severa (Grau II)" para IMC a partir de 35 e abaixo de 40.', () => calcularImc({ peso: 100    , altura: 1.59 }), igual("Obesidade severa (Grau II)"  ), testOk),
-        teste('Deve devolver "Obesidade mórbida (Grau III)" para IMC a parte de 40.'              , () => calcularImc({ peso: 100    , altura: 1.58 }), igual("Obesidade mórbida (Grau III)"), testOk),
-        teste('Deve devolver "Obesidade mórbida (Grau III)" para IMC a parte de 40.'              , () => calcularImc({ peso: 100    , altura: 0.01 }), igual("Obesidade mórbida (Grau III)"), testOk)
+        teste('Deve devolver "Abaixo do peso" para IMC abaixo de 18,5.'                           , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso: 100    , altura: 9999 })), igual("Abaixo do peso"              ), testOk),
+        teste('Deve devolver "Abaixo do peso" para IMC abaixo de 18,5.'                           , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso: 100    , altura: 2.33 })), igual("Abaixo do peso"              ), testOk),
+        teste('Deve devolver "Normal" para IMC a partir de 18,5 e abaixo de 25.'                  , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso: 100    , altura: 2.32 })), igual("Normal"                      ), testOk),
+        teste('Deve devolver "Normal" para IMC a partir de 18,5 e abaixo de 25.'                  , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso: 100    , altura: 2.01 })), igual("Normal"                      ), testOk),
+        teste('Deve devolver "Excesso de peso" para IMC a partir de 25 e abaixo de 30.'           , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso: 100    , altura: 2.0  })), igual("Excesso de peso"             ), testOk),
+        teste('Deve devolver "Excesso de peso" para IMC a partir de 25 e abaixo de 30.'           , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso: 100    , altura: 1.83 })), igual("Excesso de peso"             ), testOk),
+        teste('Deve devolver "Obesidade leve (Grau I)" para IMC a partir de 30 e abaixo de 35.'   , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso: 100    , altura: 1.82 })), igual("Obesidade leve (Grau I)"     ), testOk),
+        teste('Deve devolver "Obesidade leve (Grau I)" para IMC a partir de 30 e abaixo de 35.'   , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso: 100    , altura: 1.7  })), igual("Obesidade leve (Grau I)"     ), testOk),
+        teste('Deve devolver "Obesidade severa (Grau II)" para IMC a partir de 35 e abaixo de 40.', () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso: 100    , altura: 1.69 })), igual("Obesidade severa (Grau II)"  ), testOk),
+        teste('Deve devolver "Obesidade severa (Grau II)" para IMC a partir de 35 e abaixo de 40.', () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso: 100    , altura: 1.59 })), igual("Obesidade severa (Grau II)"  ), testOk),
+        teste('Deve devolver "Obesidade mórbida (Grau III)" para IMC a parte de 40.'              , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso: 100    , altura: 1.58 })), igual("Obesidade mórbida (Grau III)"), testOk),
+        teste('Deve devolver "Obesidade mórbida (Grau III)" para IMC a parte de 40.'              , () => calcularImc(Object.freeze({ nome: nomeAleatorio(), peso: 100    , altura: 0.01 })), igual("Obesidade mórbida (Grau III)"), testOk)
     ]);
 
     // Exercício 12.
@@ -619,56 +634,49 @@ funcs => {
 
     const naipes = Object.freeze(["♢", "♣", "♡", "♠"]);
     const valores = Object.freeze(["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]);
-    const baralhoOrdenado = Object.freeze(naipes.flatMap(n => valores.map(v => `${v}-${n}`)));
-    const nomes = Object.freeze([
-        "Carlos", "Paulo", "Maria", "Fabiana", "Fernanda", "Cláudio", "Elizabete", "Roberto", "Solange", "Yasmin",
-        "Rayssa", "Joaquim", "Pedro", "Juliana", "Rodrigo", "Ricardo", "Meire", "Sílvia", "Daniela", "Marcos",
-        "Eduardo", "Valéria", "Osvaldo", "Yago", "Felipe", "Vanessa", "Victor", "Michelle", "Alex", "Janete"
-    ]);
-    const sobrenomes = Object.freeze([
-        "de Souza", "de Oliveira", "dos Santos", "de Gusmões", "de Andrade", "da Silva", "Melo", "da Cunha", "Brito", "da Luz",
-        "Fernandes", "Teixeira", "Pereira", "Freitas", "do Amaral", "da Cruz", "Machado", "Assis", "Figueiredo", "da Conceição",
-        "Ferreira", "Matos", "de Campos", "dos Reis", "Rainha", "Valete", "de Ouros", "de Copas", "de Paus", "de Espadas"
-    ]);
 
-    const CARTAS_NA_MAO = 5;
-    const MIN_JOGADORES = 2;
-    const MAX_JOGADORES = 7;
-    const POSSIVEIS_MESAS = MAX_JOGADORES - MIN_JOGADORES + 1;
-    const embaralhamentos = [];
-    let idxNome = 0, idxSobrenome = 0, nJogadores = MIN_JOGADORES;
-    for (let i = 0; i < 30; i++) {
-        const b = i <     POSSIVEIS_MESAS ? [...baralhoOrdenado]
-                : i < 2 * POSSIVEIS_MESAS ? [...baralhoOrdenado].reverse()
-                : random.embaralhar([...baralhoOrdenado]);
-        const estaMao = {baralho: b, resto: b.slice(nJogadores * CARTAS_NA_MAO), as: null, temReal: true, jogadores: []};
-        embaralhamentos.push(estaMao);
+    function fazerEmbaralhamentos() {
+        const baralhoOrdenado = Object.freeze(naipes.flatMap(n => valores.map(v => `${v}-${n}`)));
+        const CARTAS_NA_MAO = 5;
+        const MIN_JOGADORES = 2;
+        const MAX_JOGADORES = 7;
+        const POSSIVEIS_MESAS = MAX_JOGADORES - MIN_JOGADORES + 1;
+        let nJogadores = MIN_JOGADORES;
+        const resposta = [];
 
-        for (let j = 0; j < nJogadores; j++) {
-            let meuNome;
-            do {
-                meuNome = random.sortear(nomes) + " " + random.sortear(sobrenomes);
-            } while (estaMao.jogadores.map(j => j.semCartas.nome).includes(meuNome));
-            idxNome = (idxNome + 1) % nomes.length;
-            idxSobrenome = (idxSobrenome + 1) % sobrenomes.length;
-            const jogador = {
-                semCartas: {nome: meuNome, cartas: []},
-                comCartas: {nome: meuNome, cartas: []}
-            };
-            estaMao.jogadores.push(jogador);
-            let jogadorTemReal = false;
-            for (let k = 0; k < CARTAS_NA_MAO; k++) {
-                const carta = b[k * nJogadores + j];
-                if (carta === "A-♢") estaMao.as = meuNome;
-                if (["J", "Q", "K"].includes(carta.split("-")[0])) jogadorTemReal = true;
-                jogador.comCartas.cartas.push(b[k * nJogadores + j]);
+        for (let i = 0; i < 30; i++) {
+            const b = i <     POSSIVEIS_MESAS ? [...baralhoOrdenado]
+                    : i < 2 * POSSIVEIS_MESAS ? [...baralhoOrdenado].reverse()
+                    : random.embaralhar([...baralhoOrdenado]);
+            const estaMao = {baralho: b, resto: b.slice(nJogadores * CARTAS_NA_MAO), as: null, temReal: true, jogadores: []};
+            resposta.push(estaMao);
+
+            for (let j = 0; j < nJogadores; j++) {
+                let meuNome;
+                do {
+                    meuNome = nomeAleatorio();
+                } while (estaMao.jogadores.map(j => j.semCartas.nome).includes(meuNome));
+                const jogador = {
+                    semCartas: {nome: meuNome, cartas: []},
+                    comCartas: {nome: meuNome, cartas: []}
+                };
+                estaMao.jogadores.push(jogador);
+                let jogadorTemReal = false;
+                for (let k = 0; k < CARTAS_NA_MAO; k++) {
+                    const carta = b[k * nJogadores + j];
+                    if (carta === "A-♢") estaMao.as = meuNome;
+                    if (["J", "Q", "K"].includes(carta.split("-")[0])) jogadorTemReal = true;
+                    jogador.comCartas.cartas.push(b[k * nJogadores + j]);
+                }
+                if (!jogadorTemReal) estaMao.temReal = false;
+                const ord = jogador.comCartas.cartas.map(c => c.split("-")[0]).sort();
             }
-            if (!jogadorTemReal) estaMao.temReal = false;
-            const ord = jogador.comCartas.cartas.map(c => c.split("-")[0]).sort();
+            nJogadores = ((nJogadores - 1) % POSSIVEIS_MESAS) + MIN_JOGADORES;
         }
-        nJogadores = ((nJogadores - 1) % POSSIVEIS_MESAS) + MIN_JOGADORES;
+        return Object.freeze(resposta);
     }
 
+    const embaralhamentos = fazerEmbaralhamentos();
     const maosComTrincas = [];
     const maosSemTrincas = [];
 
@@ -767,6 +775,8 @@ funcs => {
         ];
         maosSemTrincas.push(random.embaralhar(mao));
     }
+    Object.freeze(maosComTrincas);
+    Object.freeze(maosSemTrincas);
 
     const fazEx18 = () => {
         const b = 1111;
@@ -906,61 +916,77 @@ funcs => {
     ]);
 
     // Exercício 24.
-    const times = [
-        "América Mineiro", "Atlhetico Paranaense", "Atlético Mineiro", "Bahia", "Botafogo",
-        "Corinthians", "Coritiba", "Cruzeiro", "Cuiabá", "Flamengo",
-        "Fluminense", "Fortaleza", "Goiás", "Grêmio", "Internacional",
-        "Palmeiras", "Red Bull Bragantino", "Santos", "São Paulo", "Vasco"
-    ];
-    const campeonatos = [];
-    const classificacoes = [];
-    for (let i = 0; i < 50; i++) {
-        const campeonato = {};
-        campeonatos.push(campeonato)
-        times.forEach(time => campeonato[time] = {vitorias: 0, empates: 0, derrotas: 0, "saldo-de-gols": 0});
-        for (const time1 of times) {
-            for (const time2 of times) {
-                if (time1 === time2) continue;
-                const gols1 = random.nextInt(0, 6);
-                const gols2 = random.nextInt(0, 6);
-                campeonato[time1]["saldo-de-gols"] += gols1 - gols2;
-                campeonato[time2]["saldo-de-gols"] += gols2 - gols1;
-                if (gols1 > gols2) {
-                    campeonato[time1].vitorias++;
-                    campeonato[time2].derrotas++;
-                } else if (gols2 > gols1) {
-                    campeonato[time2].vitorias++;
-                    campeonato[time1].derrotas++;
-                } else {
-                    campeonato[time1].empates++;
-                    campeonato[time2].empates++;
+    class Campeonato {
+        #times;
+        #classificacao;
+
+        constructor() {
+            "use strict";
+            const nomeTimes = [
+                "América Mineiro", "Atlhetico Paranaense", "Atlético Mineiro", "Bahia", "Botafogo",
+                "Corinthians", "Coritiba", "Cruzeiro", "Cuiabá", "Flamengo",
+                "Fluminense", "Fortaleza", "Goiás", "Grêmio", "Internacional",
+                "Palmeiras", "Red Bull Bragantino", "Santos", "São Paulo", "Vasco"
+            ];
+            this.#times = {}
+            nomeTimes.forEach(time => this.#times[time] = {vitorias: 0, empates: 0, derrotas: 0, "saldo-de-gols": 0});
+            for (const time1 of nomeTimes) {
+                for (const time2 of nomeTimes) {
+                    if (time1 === time2) continue;
+                    const gols1 = random.nextInt(0, 6);
+                    const gols2 = random.nextInt(0, 6);
+                    this.#times[time1]["saldo-de-gols"] += gols1 - gols2;
+                    this.#times[time2]["saldo-de-gols"] += gols2 - gols1;
+                    if (gols1 > gols2) {
+                        this.#times[time1].vitorias++;
+                        this.#times[time2].derrotas++;
+                    } else if (gols2 > gols1) {
+                        this.#times[time2].vitorias++;
+                        this.#times[time1].derrotas++;
+                    } else {
+                        this.#times[time1].empates++;
+                        this.#times[time2].empates++;
+                    }
                 }
             }
+            this.#classificacao = [...nomeTimes].sort((time1, time2) => {
+                const pontos1 = 3 * this.#times[time1].vitorias + this.#times[time1].empates;
+                const pontos2 = 3 * this.#times[time2].vitorias + this.#times[time2].empates;
+                const saldo1 = this.#times[time1]["saldo-de-gols"];
+                const saldo2 = this.#times[time2]["saldo-de-gols"];
+                if (pontos1 !== pontos2) return pontos1 - pontos2;
+                if (saldo1 !== saldo2) return saldo1 - saldo2;
+                if (time1 > time2) return 1;
+                if (time1 < time2) return -1;
+                return 0;
+            });
+            //Object.freeze(this);
         }
-        classificacoes.push([...times].sort((time1, time2) => {
-            const pontos1 = 3 * campeonato[time1].vitorias + campeonato[time1].empates;
-            const pontos2 = 3 * campeonato[time2].vitorias + campeonato[time2].empates;
-            const saldo1 = campeonato[time1]["saldo-de-gols"];
-            const saldo2 = campeonato[time2]["saldo-de-gols"];
-            if (pontos1 !== pontos2) return pontos1 - pontos2;
-            if (saldo1 !== saldo2) return saldo1 - saldo2;
-            if (time1 > time2) return 1;
-            if (time1 < time2) return -1;
-            return 0;
-        }));
-        for (const time of times) {
-            Object.freeze(campeonato[time]);
-            Object.freeze(campeonato[time].prototype);
+
+        get times() {
+            return this.#times;
         }
-        Object.freeze(campeonato);
-        Object.freeze(campeonato.prototype);
+
+        get classificacao() {
+            return this.#classificacao;
+        }
     }
+    Object.freeze(Campeonato.prototype);
+
+    function montarCampeonatos() {
+        const campeonatos = [];
+        for (let i = 0; i < 50; i++) {
+            campeonatos.push(new Campeonato());
+        }
+        return Object.freeze(campeonatos);
+    }
+
     grupo("Exercício 24", "Classificação do campeonato").maximo(0.5).testes(
-        campeonatos.map((camp, idx) =>
+        montarCampeonatos().map((camp, idx) =>
             teste(
                 `Classificação do campeonato [${idx + 1}]`,
-                eval(`() => classificacao(${JSONbonito(camp)})`),
-                bonitoIgual(classificacoes[idx]),
+                eval(`() => classificacao(${JSONbonito(camp.times)})`),
+                bonitoIgual(camp.classificacao),
                 testOk
             )
         )
